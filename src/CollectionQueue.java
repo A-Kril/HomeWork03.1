@@ -8,14 +8,14 @@ public class CollectionQueue<E> {
     Scanner elem;
     int size;
 
-    public void printMenu() {
+    public void printMenu() throws Exception{
         System.out.println("Задайте размер коллекции: ");
         System.out.println("1: по умолчанию 16.");
         System.out.println("2: по указанию пользователя.");
         optionMenu();
     }
 
-    public void optionMenu(){
+    public void optionMenu() throws Exception{
         elem = new Scanner(System.in);
         String a = elem.next();
         switch (a) {
@@ -49,29 +49,28 @@ public class CollectionQueue<E> {
         size = 16;
     }
 
-    public void specifiedSize(){
+    public void specifiedSize() throws Exception {
         System.out.println("Введите размер коллекции: ");
-        try{
-            if (elem.hasNext()) {
+        try {
+            if (elem.hasNext()){
                 size = elem.nextInt();
-                if (size > 0) {
+                if (size < 1) throw new Exception();
+                {
                     System.out.println("Размер коллекции [" + size + "], после инициализации не меняется.");
-                }
-                else {
-                    System.out.println("Ошибка! Введите число > 0.");
-                    specifiedSize();
                 }
             }
         } catch (InputMismatchException e) {
             System.out.println("Ошибка! Введите число > 0. " + e);
             elem.next();
             specifiedSize();
+        } catch (Exception ex) {
+            System.out.println("Ошибка! Введите число > 0. " + ex);
+            specifiedSize();
         }
     }
 
-    public void notSize(){
+    public void notSize() throws Exception{
         System.out.println("Ошибка! Повтор: введите 1 или 2...");
         optionMenu();
-
     }
 }
